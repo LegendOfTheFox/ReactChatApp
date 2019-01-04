@@ -24,7 +24,9 @@ const user_reducer = (state = initialUserState, action) => {
 };
 
 const initialChannelState = {
-  currentChannel: null
+  currentChannel: null,
+  isPrivateChannel: false,
+  userPosts: null
 };
 
 const channel_reducer = (state = initialChannelState, action) => {
@@ -34,6 +36,33 @@ const channel_reducer = (state = initialChannelState, action) => {
         ...state,
         currentChannel: action.payload.currentChannel
       };
+    case actionType.SET_PRIVATE_CHANNEL:
+      return {
+        ...state,
+        isPrivateChannel: action.payload.isPrivateChannel
+      };
+    case actionType.SET_USER_POSTS:
+      return {
+        ...state,
+        userPosts: action.payload.userPosts
+      };
+    default:
+      return state;
+  }
+};
+
+const initialColorsState = {
+  primaryColor: "#4c3c4c",
+  secondaryColor: "eee"
+};
+
+const colors_reducer = (state = initialColorsState, action) => {
+  switch (action.type) {
+    case actionType.SET_COLORS:
+      return {
+        primaryColor: action.payload.primaryColor,
+        secondaryColor: action.payload.secondaryColor
+      };
     default:
       return state;
   }
@@ -41,7 +70,8 @@ const channel_reducer = (state = initialChannelState, action) => {
 
 const rootReducer = combineReducers({
   user: user_reducer,
-  channel: channel_reducer
+  channel: channel_reducer,
+  colors: colors_reducer
 });
 
 export default rootReducer;
